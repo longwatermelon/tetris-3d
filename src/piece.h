@@ -21,5 +21,7 @@ bool piece_move_cube(struct Piece *p, char *board, SDL_Point vec, int idx);
 
 void piece_random(struct Piece *p, SDL_Point pos);
 
+void piece_rotate(struct Piece *p);
+
 #endif
 

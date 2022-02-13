@@ -99,6 +99,7 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
             {
             case SDLK_RIGHT: piece_move(p->piece, p->board, (SDL_Point){ 1, 0 }); break;
             case SDLK_LEFT: piece_move(p->piece, p->board, (SDL_Point){ -1, 0 }); break;
+            case SDLK_UP: piece_rotate(p->piece); break;
             }
         } break;
         }

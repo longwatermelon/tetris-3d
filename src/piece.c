@@ -155,3 +155,21 @@ void piece_random(struct Piece *p, SDL_Point pos)
     }
 }
 
+
+void piece_rotate(struct Piece *p)
+{
+    for (int i = 0; i < 4; ++i)
+    {
+        SDL_Point center = p->cubes[1];
+
+        int dx = p->cubes[i].x - center.x;
+        int dy = p->cubes[i].y - center.y;
+
+        p->cubes[i].x = -dy + center.x;
+        p->cubes[i].y = dx + center.y;
+
+        p->renders[i]->pos.x = p->cubes[i].x - 5;
+        p->renders[i]->pos.y = p->cubes[i].y - 10;
+    }
+}
+
