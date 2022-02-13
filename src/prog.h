@@ -23,6 +23,8 @@ struct Prog
     size_t nborders;
 
     struct Camera *camera;
+
+    bool camera_follow_piece;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);

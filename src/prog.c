@@ -26,7 +26,9 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
 
     prog_create_borders(p);
 
-    p->camera = camera_alloc((Vec3f){ 5.f, -4.f, 0 }, -.5f, .3f);
+    p->camera = camera_alloc((Vec3f){ 0.f, 0.f, 0.f }, 0.f, 0.f);
+
+    p->camera_follow_piece = false;
 
     return p;
 }
@@ -58,6 +60,12 @@ void prog_mainloop(struct Prog *p)
     while (p->running)
     {
         prog_handle_events(p, &evt);
+
+        if (p->camera_follow_piece && p->piece)
+        {
+            p->camera->pos = p->piece->renders[1]->pos;
+            p->camera->pos.z = 5.f;
+        }
 
         SDL_RenderClear(p->rend);
 
@@ -120,6 +128,34 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
                     ;
                 break;
             case SDLK_DOWN: piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }); break;
+
+            case SDLK_1:
+                p->camera->pos = (Vec3f){ 5.f, -4.f, 0.f };
+                p->camera->ha = -.5f;
+                p->camera->va = .3f;
+                break;
+            case SDLK_2:
+                p->camera->pos = (Vec3f){ 0.f, 0.f, 30.f };
+                p->camera->ha = M_PI;
+                p->camera->va = 0.f;
+                break;
+            case SDLK_3:
+                p->camera->pos = (Vec3f){ -10.f, 0.f, 8.f };
+                p->camera->ha = 1.f;
+                p->camera->va = .1f;
+                break;
+            case SDLK_4:
+                p->camera->pos = (Vec3f){ 0.f, 15.f, 0.f };
+                p->camera->ha = 0.f;
+                p->camera->va = -1.f;
+                break;
+            case SDLK_0:
+                p->camera->pos = (Vec3f){ 0.f, 0.f, 0.f };
+                p->camera->ha = 0.f;
+                p->camera->va = 0.f;
+                break;
+
+            case SDLK_z: p->camera_follow_piece = !p->camera_follow_piece; break;
             }
         } break;
         }

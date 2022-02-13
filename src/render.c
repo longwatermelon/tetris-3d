@@ -7,6 +7,7 @@ SDL_FPoint render_project_point(Vec3f p, struct Camera *c)
 
     p.x -= c->pos.x;
     p.y -= c->pos.y;
+    p.z -= c->pos.z;
 
     float rotx[3][3] = {
         { 1, 0, 0 },
