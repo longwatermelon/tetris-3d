@@ -38,7 +38,8 @@ bool piece_move_cube(struct Piece *p, char *board, SDL_Point vec)
 
     int index = util_coords_to_index(p->cube, 10);
 
-    if (index < 0 || index >= strlen(board) || board[index] != '.')
+    if (index < 0 || index >= strlen(board) || board[index] != '.' ||
+        p->cube.x < 0 || p->cube.x >= 10)
     {
         p->cube = prev;
         return false;
