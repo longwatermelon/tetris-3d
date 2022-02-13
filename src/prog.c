@@ -73,6 +73,8 @@ void prog_mainloop(struct Prog *p)
                 p->pieces[p->npieces - 1] = p->piece;
 
                 p->piece = piece_alloc((SDL_Point){ 5, 0 });
+
+                prog_detect_line(p);
             }
 
             clock_gettime(CLOCK_MONOTONIC, &last_moved);
@@ -135,5 +137,52 @@ void prog_create_borders(struct Prog *p)
 
     for (int i = 0; i < 20; ++i)
         p->borders[i + 10 + 20] = cube_alloc((Vec3f){ 5, i - 9, 15 }, (SDL_Color){ 200, 200, 200 });
+}
+
+
+void prog_detect_line(struct Prog *p)
+{
+    for (int y = 0; y < 20; ++y)
+    {
+        bool line = true;
+
+        for (int x = 0; x < 10; ++x)
+        {
+            if (p->board[y * 10 + x] == '.')
+                line = false;
+        }
+
+        if (line)
+            prog_clear_line(p, y);
+    }
+}
+
+
+void prog_clear_line(struct Prog *p, int y)
+{
+    for (int i = 0; i < 10; ++i)
+        p->board[y * 10 + i] = '.';
+
+    for (size_t i = 0; i < p->npieces; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            if (p->pieces[i]->renders[j])
+            {
+                if (p->pieces[i]->cubes[j].y == y)
+                {
+                    cube_free(p->pieces[i]->renders[j]);
+                    p->pieces[i]->renders[j] = 0;
+                }
+                else if (p->pieces[i]->cubes[j].y < y)
+                {
+                    p->board[util_coords_to_index(p->pieces[i]->cubes[j], 10)] = '.';
+                    ++p->pieces[i]->cubes[j].y;
+                    ++p->pieces[i]->renders[j]->pos.y;
+                    p->board[util_coords_to_index(p->pieces[i]->cubes[j], 10)] = '#';
+                }
+            }
+        }
+    }
 }
 

@@ -16,6 +16,10 @@ struct Piece *piece_alloc(SDL_Point pos)
 
 void piece_free(struct Piece *p)
 {
+    for (int i = 0; i < 4; ++i)
+        if (p->renders[i])
+            cube_free(p->renders[i]);
+
     free(p);
 }
 
@@ -23,7 +27,8 @@ void piece_free(struct Piece *p)
 void piece_render(struct Piece *p, SDL_Renderer *rend)
 {
     for (int i = 0; i < 4; ++i)
-        cube_render(p->renders[i], rend);
+        if (p->renders[i])
+            cube_render(p->renders[i], rend);
 }
 
 

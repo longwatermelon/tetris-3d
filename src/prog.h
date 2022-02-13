@@ -29,5 +29,8 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt);
 
 void prog_create_borders(struct Prog *p);
 
+void prog_detect_line(struct Prog *p);
+void prog_clear_line(struct Prog *p, int y);
+
 #endif
 
