@@ -117,6 +117,7 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
                 while (piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }))
                     ;
                 break;
+            case SDLK_DOWN: piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }); break;
             }
         } break;
         }
@@ -176,13 +177,23 @@ void prog_clear_line(struct Prog *p, int y)
                 }
                 else if (p->pieces[i]->cubes[j].y < y)
                 {
-                    p->board[util_coords_to_index(p->pieces[i]->cubes[j], 10)] = '.';
+                    int index = util_coords_to_index(p->pieces[i]->cubes[j], 10);
+
+                    if (p->board[index] == '#')
+                        p->board[util_coords_to_index(p->pieces[i]->cubes[j], 10)] = '.';
+
                     ++p->pieces[i]->cubes[j].y;
                     ++p->pieces[i]->renders[j]->pos.y;
-                    p->board[util_coords_to_index(p->pieces[i]->cubes[j], 10)] = '#';
+                    // @ indicates pieces that have been newly moved after the line clear, so that they aren't
+                    // cleared by mistake by another moving piece later
+                    p->board[util_coords_to_index(p->pieces[i]->cubes[j], 10)] = '@';
                 }
             }
         }
     }
+
+    for (int i = 0; i < strlen(p->board); ++i)
+        if (p->board[i] == '@')
+            p->board[i] = '#';
 }
 
