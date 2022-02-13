@@ -7,10 +7,8 @@ struct Piece *piece_alloc(SDL_Point pos)
 
     piece_random(p, pos);
 
-    SDL_Color col = { rand() % 255, rand() % 255, rand() % 255 };
-
     for (int i = 0; i < 4; ++i)
-        p->renders[i] = cube_alloc((Vec3f){ p->cubes[i].x - 5, p->cubes[i].y - 10, 15 }, col);
+        p->renders[i] = cube_alloc((Vec3f){ p->cubes[i].x - 5, p->cubes[i].y - 10, 15 }, p->color);
 
     return p;
 }
@@ -84,6 +82,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
+        p->color = (SDL_Color){ 142, 255, 241 };
     } break;
     case 1: // square
     {
@@ -95,6 +94,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
+        p->color = (SDL_Color){ 255, 255, 100 };
     } break;
     case 2: // left squiggle
     {
@@ -106,6 +106,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
+        p->color = (SDL_Color){ 102, 255, 102 };
     } break;
     case 3: // right squiggle
     {
@@ -117,6 +118,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
+        p->color = (SDL_Color){ 102, 255, 102 };
     } break;
     case 4: // left L
     {
@@ -128,7 +130,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
-
+        p->color = (SDL_Color){ 255, 178, 102 };
     } break;
     case 5: // right L
     {
@@ -140,6 +142,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
+        p->color = (SDL_Color){ 255, 178, 102 };
     } break;
     case 6: // T
     {
@@ -151,6 +154,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
+        p->color = (SDL_Color){ 255, 153, 255 };
     } break;
     }
 }

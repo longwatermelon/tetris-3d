@@ -62,7 +62,7 @@ void prog_mainloop(struct Prog *p)
         if (!p->piece)
             p->piece = piece_alloc((SDL_Point){ 5, 0 });
 
-        if (util_timediff(&last_moved, &now) > 0.1f)
+        if (util_timediff(&last_moved, &now) > 0.35f)
         {
             if (!piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }))
             {
@@ -111,6 +111,10 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
             case SDLK_RIGHT: piece_move(p->piece, p->board, (SDL_Point){ 1, 0 }); break;
             case SDLK_LEFT: piece_move(p->piece, p->board, (SDL_Point){ -1, 0 }); break;
             case SDLK_UP: piece_rotate(p->piece); break;
+            case SDLK_SPACE:
+                while (piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }))
+                    ;
+                break;
             }
         } break;
         }

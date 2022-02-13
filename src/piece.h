@@ -9,6 +9,8 @@ struct Piece
 {
     SDL_Point cubes[4];
     struct Cube *renders[4];
+
+    SDL_Color color;
 };
 
 struct Piece *piece_alloc(SDL_Point pos);
