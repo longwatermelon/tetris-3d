@@ -21,6 +21,11 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
     p->pieces = 0;
     p->npieces = 0;
 
+    p->borders = 0;
+    p->nborders = 0;
+
+    prog_create_borders(p);
+
     return p;
 }
 
@@ -31,6 +36,9 @@ void prog_free(struct Prog *p)
         piece_free(p->pieces[i]);
 
     piece_free(p->piece);
+
+    for (size_t i = 0; i < p->nborders; ++i)
+        cube_free(p->borders[i]);
 
     free(p->board);
     free(p);
@@ -70,6 +78,9 @@ void prog_mainloop(struct Prog *p)
             clock_gettime(CLOCK_MONOTONIC, &last_moved);
         }
 
+        for (size_t i = 0; i < p->nborders; ++i)
+            cube_render(p->borders[i], p->rend);
+
         for (size_t i = 0; i < p->npieces; ++i)
             piece_render(p->pieces[i], p->rend);
 
@@ -104,5 +115,21 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
         } break;
         }
     }
+}
+
+
+void prog_create_borders(struct Prog *p)
+{
+    p->nborders = 10 + 20 * 2;
+    p->borders = malloc(sizeof(struct Cube*) * p->nborders);
+
+    for (int i = 0; i < 10; ++i)
+        p->borders[i] = cube_alloc((Vec3f){ i - 5, 10, 15 }, (SDL_Color){ 200, 200, 200 });
+
+    for (int i = 0; i < 20; ++i)
+        p->borders[i + 10] = cube_alloc((Vec3f){ -6, i - 9, 15 }, (SDL_Color){ 200, 200, 200 });
+
+    for (int i = 0; i < 20; ++i)
+        p->borders[i + 10 + 20] = cube_alloc((Vec3f){ 5, i - 9, 15 }, (SDL_Color){ 200, 200, 200 });
 }
 

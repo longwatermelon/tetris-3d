@@ -16,6 +16,9 @@ struct Prog
     struct Piece *piece;
     struct Piece **pieces;
     size_t npieces;
+
+    struct Cube **borders;
+    size_t nborders;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);
@@ -23,6 +26,8 @@ void prog_free(struct Prog *p);
 
 void prog_mainloop(struct Prog *p);
 void prog_handle_events(struct Prog *p, SDL_Event *evt);
+
+void prog_create_borders(struct Prog *p);
 
 #endif
 
