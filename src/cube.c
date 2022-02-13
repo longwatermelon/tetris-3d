@@ -13,10 +13,11 @@ struct Cube *cube_alloc(Vec3f pos, SDL_Color col)
         { 1.f, 0.f, 0.f },
         { 1.f, 0.f, 1.f },
         { 0.f, 0.f, 1.f },
-        { 0.f, 1.f, 1.f },
+
         { 0.f, 1.f, 0.f },
         { 1.f, 1.f, 0.f },
-        { 1.f, 1.f, 1.f }
+        { 1.f, 1.f, 1.f },
+        { 0.f, 1.f, 1.f }
     };
 
     memcpy(cube->points, tmp, sizeof(cube->points));
@@ -35,10 +36,18 @@ void cube_render(struct Cube *cube, SDL_Renderer *rend)
 {
     SDL_SetRenderDrawColor(rend, cube->color.r, cube->color.g, cube->color.b, 255);
 
-    for (int i = 1; i < 8; ++i)
-    {
+    for (int i = 1; i < 4; ++i)
         cube_draw_line(cube, rend, i, i - 1);
-    }
+
+    cube_draw_line(cube, rend, 3, 0);
+
+    for (int i = 5; i < 8; ++i)
+        cube_draw_line(cube, rend, i, i - 1);
+
+    cube_draw_line(cube, rend, 7, 4);
+
+    for (int i = 0; i < 4; ++i)
+        cube_draw_line(cube, rend, i, i + 4);
 }
 
 
