@@ -33,8 +33,10 @@ void prog_mainloop(struct Prog *p)
     SDL_Event evt;
     struct Piece *piece = 0;
 
-    struct timespec last_moved, now;
+    struct Piece **pieces = 0;
+    size_t npieces = 0;
 
+    struct timespec last_moved, now;
     clock_gettime(CLOCK_MONOTONIC, &last_moved);
     clock_gettime(CLOCK_MONOTONIC, &now);
 
@@ -55,21 +57,34 @@ void prog_mainloop(struct Prog *p)
         if (!piece)
             piece = piece_alloc((SDL_Point){ 5, 0 });
 
-        if (util_timediff(&last_moved, &now) > 1.f)
+        if (util_timediff(&last_moved, &now) > 0.1f)
         {
-            piece_move(piece, (SDL_Point){ 0, 1 });
+            if (!piece_move(piece, p->board, (SDL_Point){ 0, 1 }))
+            {
+                pieces = realloc(pieces, sizeof(struct Piece*) * ++npieces);
+                pieces[npieces - 1] = piece;
+
+                piece = piece_alloc((SDL_Point){ 5, 0 });
+            }
+
             clock_gettime(CLOCK_MONOTONIC, &last_moved);
         }
 
+        for (size_t i = 0; i < npieces; ++i)
+            piece_render(pieces[i], p->rend);
+
         if (piece)
-        {
             piece_render(piece, p->rend);
-        }
 
         SDL_SetRenderDrawColor(p->rend, 0, 0, 0, 255);
         SDL_RenderPresent(p->rend);
 
         clock_gettime(CLOCK_MONOTONIC, &now);
     }
+
+    for (size_t i = 0; i < npieces; ++i)
+        piece_free(pieces[i]);
+
+    piece_free(piece);
 }
 

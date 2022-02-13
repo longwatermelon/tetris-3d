@@ -1,8 +1,10 @@
 #include "prog.h"
+#include <time.h>
 
 
 int main(int argc, char **argv)
 {
+    srand(time(0));
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window = SDL_CreateWindow("3d Tetris", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 800, SDL_WINDOW_SHOWN);
