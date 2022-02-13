@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-std=gnu17 -ggdb -Wall -Werror -pedantic
-LDFLAGS=-lSDL2
+LDFLAGS=-lm -lSDL2
 
 SRC=$(wildcard src/*.c)
 OBJS=$(notdir $(SRC:.c=.o))

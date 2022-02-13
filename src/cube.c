@@ -32,26 +32,26 @@ void cube_free(struct Cube *cube)
 }
 
 
-void cube_render(struct Cube *cube, SDL_Renderer *rend)
+void cube_render(struct Cube *cube, SDL_Renderer *rend, struct Camera *c)
 {
     SDL_SetRenderDrawColor(rend, cube->color.r, cube->color.g, cube->color.b, 255);
 
     for (int i = 1; i < 4; ++i)
-        cube_draw_line(cube, rend, i, i - 1);
+        cube_draw_line(cube, rend, c, i, i - 1);
 
-    cube_draw_line(cube, rend, 3, 0);
+    cube_draw_line(cube, rend, c, 3, 0);
 
     for (int i = 5; i < 8; ++i)
-        cube_draw_line(cube, rend, i, i - 1);
+        cube_draw_line(cube, rend, c, i, i - 1);
 
-    cube_draw_line(cube, rend, 7, 4);
+    cube_draw_line(cube, rend, c, 7, 4);
 
     for (int i = 0; i < 4; ++i)
-        cube_draw_line(cube, rend, i, i + 4);
+        cube_draw_line(cube, rend, c, i, i + 4);
 }
 
 
-void cube_draw_line(struct Cube *cube, SDL_Renderer *rend, int i1, int i2)
+void cube_draw_line(struct Cube *cube, SDL_Renderer *rend, struct Camera *c, int i1, int i2)
 {
     Vec3f adjusted_i1 = {
         cube->pos.x + cube->points[i1].x,
@@ -65,8 +65,8 @@ void cube_draw_line(struct Cube *cube, SDL_Renderer *rend, int i1, int i2)
         cube->pos.z + cube->points[i2].z
     };
 
-    SDL_Point p1 = render_center_and_scale(render_project_point(adjusted_i1));
-    SDL_Point p2 = render_center_and_scale(render_project_point(adjusted_i2));
+    SDL_Point p1 = render_center_and_scale(render_project_point(adjusted_i1, c));
+    SDL_Point p2 = render_center_and_scale(render_project_point(adjusted_i2, c));
 
     SDL_RenderDrawLine(rend, p1.x, p1.y, p2.x, p2.y);
 }

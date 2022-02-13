@@ -1,9 +1,27 @@
 #include "render.h"
 
 
-SDL_FPoint render_project_point(Vec3f p)
+SDL_FPoint render_project_point(Vec3f p, struct Camera *c)
 {
     SDL_FPoint proj;
+
+    p.x -= c->pos.x;
+    p.y -= c->pos.y;
+
+    float rotx[3][3] = {
+        { 1, 0, 0 },
+        { 0, cosf(c->va), sinf(c->va) },
+        { 0, -sinf(c->va), cosf(c->va) }
+    };
+
+    float roty[3][3] = {
+        { cosf(c->ha), 0, sinf(c->ha) },
+        { 0, 1, 0 },
+        { -sinf(c->ha), 0, cosf(c->ha) }
+    };
+
+    p = util_matrix_mul(roty, p);
+    p = util_matrix_mul(rotx, p);
 
     if (p.z != 0.f)
     {

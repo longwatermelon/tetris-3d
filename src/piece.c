@@ -24,11 +24,11 @@ void piece_free(struct Piece *p)
 }
 
 
-void piece_render(struct Piece *p, SDL_Renderer *rend)
+void piece_render(struct Piece *p, SDL_Renderer *rend, struct Camera *c)
 {
     for (int i = 0; i < 4; ++i)
         if (p->renders[i])
-            cube_render(p->renders[i], rend);
+            cube_render(p->renders[i], rend, c);
 }
 
 

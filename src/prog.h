@@ -1,6 +1,8 @@
 #ifndef PROG_H
 #define PROG_H
 
+#include "camera.h"
+#include "piece.h"
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
@@ -19,6 +21,8 @@ struct Prog
 
     struct Cube **borders;
     size_t nborders;
+
+    struct Camera *camera;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);
