@@ -1,4 +1,5 @@
 #include "prog.h"
+#include "cube.h"
 
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
@@ -22,6 +23,7 @@ void prog_free(struct Prog *p)
 void prog_mainloop(struct Prog *p)
 {
     SDL_Event evt;
+    struct Cube *c = cube_alloc((Vec3f){ 1, 1, 3 }, (SDL_Color){ 255, 0, 0 });
 
     while (p->running)
     {
@@ -36,6 +38,8 @@ void prog_mainloop(struct Prog *p)
         }
 
         SDL_RenderClear(p->rend);
+
+        cube_render(c, p->rend);
 
         SDL_SetRenderDrawColor(p->rend, 0, 0, 0, 255);
         SDL_RenderPresent(p->rend);
