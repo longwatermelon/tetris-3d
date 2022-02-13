@@ -10,6 +10,8 @@ struct Prog
 
     SDL_Window *window;
     SDL_Renderer *rend;
+
+    char *board;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);
