@@ -58,6 +58,9 @@ void prog_mainloop(struct Prog *p)
         {
             if (!piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }))
             {
+                for (int i = 0; i < 4; ++i)
+                    p->board[util_coords_to_index(p->piece->cubes[i], 10)] = '#';
+
                 p->pieces = realloc(p->pieces, sizeof(struct Piece*) * ++p->npieces);
                 p->pieces[p->npieces - 1] = p->piece;
 
