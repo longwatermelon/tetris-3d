@@ -5,19 +5,12 @@ struct Piece *piece_alloc(SDL_Point pos)
 {
     struct Piece *p = malloc(sizeof(struct Piece));
 
-    const SDL_Point cubes[4] = {
-        { pos.x, pos.y },
-        { pos.x + 1, pos.y },
-        { pos.x + 2, pos.y },
-        { pos.x + 3, pos.y }
-    };
-
-    memcpy(p->cubes, cubes, sizeof(p->cubes));
+    piece_random(p, pos);
 
     SDL_Color col = { rand() % 255, rand() % 255, rand() % 255 };
 
     for (int i = 0; i < 4; ++i)
-        p->renders[i] = cube_alloc((Vec3f){ cubes[i].x - 5, cubes[i].y - 10, 15 }, col);
+        p->renders[i] = cube_alloc((Vec3f){ p->cubes[i].x - 5, p->cubes[i].y - 10, 15 }, col);
 
     return p;
 }
@@ -71,9 +64,94 @@ bool piece_move_cube(struct Piece *p, char *board, SDL_Point vec, int idx)
     p->renders[idx]->pos.x += vec.x;
     p->renders[idx]->pos.y += vec.y;
 
-//    board[util_coords_to_index(prev, 10)] = '.';
-//    board[index] = '#';
-
     return true;
+}
+
+
+void piece_random(struct Piece *p, SDL_Point pos)
+{
+    int i = rand() % 7;
+
+    switch (i)
+    {
+    case 0: // bar
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x + 1, pos.y },
+            { pos.x + 2, pos.y },
+            { pos.x + 3, pos.y }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+    } break;
+    case 1: // square
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x + 1, pos.y },
+            { pos.x, pos.y + 1 },
+            { pos.x + 1, pos.y + 1 }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+    } break;
+    case 2: // left squiggle
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x, pos.y + 1 },
+            { pos.x + 1, pos.y + 1 },
+            { pos.x + 1, pos.y + 2 }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+    } break;
+    case 3: // right squiggle
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x, pos.y + 1 },
+            { pos.x - 1, pos.y + 1 },
+            { pos.x - 1, pos.y + 2 }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+    } break;
+    case 4: // left L
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x, pos.y + 1 },
+            { pos.x, pos.y + 2 },
+            { pos.x + 1, pos.y + 2 }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+
+    } break;
+    case 5: // right L
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x, pos.y + 1 },
+            { pos.x, pos.y + 2 },
+            { pos.x - 1, pos.y + 2 }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+    } break;
+    case 6: // T
+    {
+        SDL_Point tmp[4] = {
+            { pos.x, pos.y },
+            { pos.x + 1, pos.y },
+            { pos.x + 2, pos.y },
+            { pos.x + 1, pos.y + 1 }
+        };
+
+        memcpy(p->cubes, tmp, sizeof(p->cubes));
+    } break;
+    }
 }
 

@@ -19,5 +19,7 @@ void piece_render(struct Piece *p, SDL_Renderer *rend);
 bool piece_move(struct Piece *p, char *board, SDL_Point vec);
 bool piece_move_cube(struct Piece *p, char *board, SDL_Point vec, int idx);
 
+void piece_random(struct Piece *p, SDL_Point pos);
+
 #endif
 
