@@ -29,6 +29,7 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
     p->camera = camera_alloc((Vec3f){ 0.f, 0.f, 0.f }, 0.f, 0.f);
 
     p->camera_follow_piece = false;
+    p->camera_rotate = false;
 
     return p;
 }
@@ -66,6 +67,9 @@ void prog_mainloop(struct Prog *p)
             p->camera->pos = p->piece->renders[1]->pos;
             p->camera->pos.z = 5.f;
         }
+
+        if (p->camera_rotate)
+            prog_rotate_camera(p);
 
         SDL_RenderClear(p->rend);
 
@@ -156,6 +160,7 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
                 break;
 
             case SDLK_z: p->camera_follow_piece = !p->camera_follow_piece; break;
+            case SDLK_r: p->camera_rotate = !p->camera_rotate; break;
             }
         } break;
         }
@@ -233,5 +238,20 @@ void prog_clear_line(struct Prog *p, int y)
     for (int i = 0; i < strlen(p->board); ++i)
         if (p->board[i] == '@')
             p->board[i] = '#';
+}
+
+
+void prog_rotate_camera(struct Prog *p)
+{
+    float angle = .06f;
+
+    Vec3f center = { 0.f, 0.f, 15.f };
+
+    float dx = p->camera->pos.x - center.x;
+    float dz = p->camera->pos.z - center.z;
+
+    p->camera->ha -= angle;
+    p->camera->pos.x = cosf(angle) * dx - sinf(angle) * dz + center.x;
+    p->camera->pos.z = sinf(angle) * dx + cosf(angle) * dz + center.z;
 }
 

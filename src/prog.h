@@ -25,6 +25,7 @@ struct Prog
     struct Camera *camera;
 
     bool camera_follow_piece;
+    bool camera_rotate;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);
@@ -37,6 +38,8 @@ void prog_create_borders(struct Prog *p);
 
 void prog_detect_line(struct Prog *p);
 void prog_clear_line(struct Prog *p, int y);
+
+void prog_rotate_camera(struct Prog *p);
 
 #endif
 
