@@ -139,14 +139,14 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
             case SDLK_DOWN: piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }); break;
 
             case SDLK_1:
+                p->camera->pos = (Vec3f){ 0.f, 0.f, 0.f };
+                p->camera->ha = 0.f;
+                p->camera->va = 0.f;
+                break;
+            case SDLK_2:
                 p->camera->pos = (Vec3f){ 5.f, -4.f, 0.f };
                 p->camera->ha = -.5f;
                 p->camera->va = .3f;
-                break;
-            case SDLK_2:
-                p->camera->pos = (Vec3f){ 0.f, 0.f, 30.f };
-                p->camera->ha = M_PI;
-                p->camera->va = 0.f;
                 break;
             case SDLK_3:
                 p->camera->pos = (Vec3f){ -10.f, 0.f, 8.f };
@@ -163,9 +163,9 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
                 p->camera->ha = 0.f;
                 p->camera->va = 1.f;
                 break;
-            case SDLK_0:
-                p->camera->pos = (Vec3f){ 0.f, 0.f, 0.f };
-                p->camera->ha = 0.f;
+            case SDLK_6:
+                p->camera->pos = (Vec3f){ 0.f, 0.f, 30.f };
+                p->camera->ha = M_PI;
                 p->camera->va = 0.f;
                 break;
 

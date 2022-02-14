@@ -6,7 +6,8 @@
 * up: rotate
 * down: speed up
 * space: place piece
-* 1-5: change view angle
+* 1: reset view
+* 2-6: change view angle
 * z: toggle camera follow piece
 * r: toggle rotation around board
 
