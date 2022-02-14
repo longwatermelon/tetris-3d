@@ -2,6 +2,10 @@
 3d tetris
 
 # Controls
+* left / right arrow keys: move left and right
+* up: rotate
+* down: speed up
+* space: place piece
 * 1-5: change view angle
 * z: toggle camera follow piece
 * r: toggle rotation around board
