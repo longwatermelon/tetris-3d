@@ -18,6 +18,7 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
         strcat(p->board, "..........");
 
     p->piece = 0;
+
     p->pieces = 0;
     p->npieces = 0;
 
@@ -59,8 +60,8 @@ void prog_mainloop(struct Prog *p)
 {
     SDL_Event evt;
 
-    struct timespec last_moved, now;
-    clock_gettime(CLOCK_MONOTONIC, &last_moved);
+    struct timespec now;
+    clock_gettime(CLOCK_MONOTONIC, &p->last_moved);
     clock_gettime(CLOCK_MONOTONIC, &now);
 
     while (p->running)
@@ -81,10 +82,13 @@ void prog_mainloop(struct Prog *p)
         if (!p->piece)
             p->piece = piece_alloc((SDL_Point){ 5, 0 });
 
-        if (util_timediff(&last_moved, &now) > 0.35f)
+        if (util_timediff(&p->last_moved, &now) > 0.35f)
         {
             if (!piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }))
             {
+                for (int i = 0; i < 4; ++i)
+                    p->piece->renders[i]->color = (SDL_Color){ 255, 255, 255 };
+
                 for (int i = 0; i < 4; ++i)
                     p->board[util_coords_to_index(p->piece->cubes[i], 10)] = '#';
 
@@ -96,7 +100,7 @@ void prog_mainloop(struct Prog *p)
                 prog_detect_line(p);
             }
 
-            clock_gettime(CLOCK_MONOTONIC, &last_moved);
+            clock_gettime(CLOCK_MONOTONIC, &p->last_moved);
         }
 
         for (size_t i = 0; i < p->nborders; ++i)
@@ -135,6 +139,7 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
             case SDLK_SPACE:
                 while (piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }))
                     ;
+                p->last_moved.tv_sec = 0;
                 break;
             case SDLK_DOWN: piece_move(p->piece, p->board, (SDL_Point){ 0, 1 }); break;
 

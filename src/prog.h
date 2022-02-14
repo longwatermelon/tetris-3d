@@ -26,6 +26,8 @@ struct Prog
 
     bool camera_follow_piece;
     bool camera_rotate;
+
+    struct timespec last_moved;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);

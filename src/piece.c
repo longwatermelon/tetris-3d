@@ -28,7 +28,16 @@ void piece_render(struct Piece *p, SDL_Renderer *rend, struct Camera *c)
 {
     for (int i = 0; i < 4; ++i)
         if (p->renders[i])
+        {
             cube_render(p->renders[i], rend, c);
+
+            if (p->renders[i]->color.r > p->color.r) p->renders[i]->color.r -= 5;
+            else p->renders[i]->color.r = p->color.r;
+            if (p->renders[i]->color.g > p->color.g) p->renders[i]->color.g -= 5;
+            else p->renders[i]->color.g = p->color.g;
+            if (p->renders[i]->color.b > p->color.b) p->renders[i]->color.b -= 5;
+            else p->renders[i]->color.b = p->color.b;
+        }
 }
 
 
