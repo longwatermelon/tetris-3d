@@ -40,12 +40,17 @@ void prog_free(struct Prog *p)
     for (size_t i = 0; i < p->npieces; ++i)
         piece_free(p->pieces[i]);
 
+    free(p->pieces);
     piece_free(p->piece);
 
     for (size_t i = 0; i < p->nborders; ++i)
         cube_free(p->borders[i]);
 
+    free(p->borders);
+
     free(p->board);
+    camera_free(p->camera);
+
     free(p);
 }
 
