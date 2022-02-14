@@ -153,6 +153,11 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
                 p->camera->ha = 0.f;
                 p->camera->va = -1.f;
                 break;
+            case SDLK_5:
+                p->camera->pos = (Vec3f){ 0.f, -15.f, 0.f };
+                p->camera->ha = 0.f;
+                p->camera->va = 1.f;
+                break;
             case SDLK_0:
                 p->camera->pos = (Vec3f){ 0.f, 0.f, 0.f };
                 p->camera->ha = 0.f;
