@@ -17,7 +17,7 @@ struct Piece
 struct Piece *piece_alloc(SDL_Point pos);
 void piece_free(struct Piece *p);
 
-void piece_render(struct Piece *p, SDL_Renderer *rend, struct Camera *c);
+void piece_render(struct Piece *p, SDL_Renderer *rend, struct Camera *c, bool fill);
 
 bool piece_move(struct Piece *p, char *board, SDL_Point vec);
 bool piece_move_cube(struct Piece *p, char *board, SDL_Point vec, int idx);

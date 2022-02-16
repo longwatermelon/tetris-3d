@@ -32,7 +32,7 @@ void cube_free(struct Cube *cube)
 }
 
 
-void cube_render(struct Cube *cube, SDL_Renderer *rend, struct Camera *c)
+void cube_render(struct Cube *cube, SDL_Renderer *rend, struct Camera *c, bool fill)
 {
     SDL_SetRenderDrawColor(rend, cube->color.r, cube->color.g, cube->color.b, 255);
 
@@ -48,6 +48,18 @@ void cube_render(struct Cube *cube, SDL_Renderer *rend, struct Camera *c)
 
     for (int i = 0; i < 4; ++i)
         cube_draw_line(cube, rend, c, i, i + 4);
+
+    if (fill)
+    {
+        cube_draw_line(cube, rend, c, 4, 1);
+        cube_draw_line(cube, rend, c, 3, 7);
+
+        cube_draw_line(cube, rend, c, 7, 5);
+        cube_draw_line(cube, rend, c, 3, 1);
+
+        cube_draw_line(cube, rend, c, 5, 2);
+        cube_draw_line(cube, rend, c, 4, 3);
+    }
 }
 
 

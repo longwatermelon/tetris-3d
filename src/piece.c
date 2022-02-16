@@ -24,12 +24,12 @@ void piece_free(struct Piece *p)
 }
 
 
-void piece_render(struct Piece *p, SDL_Renderer *rend, struct Camera *c)
+void piece_render(struct Piece *p, SDL_Renderer *rend, struct Camera *c, bool fill)
 {
     for (int i = 0; i < 4; ++i)
         if (p->renders[i])
         {
-            cube_render(p->renders[i], rend, c);
+            cube_render(p->renders[i], rend, c, fill);
 
             if (p->renders[i]->color.r > p->color.r) p->renders[i]->color.r -= 5;
             else p->renders[i]->color.r = p->color.r;

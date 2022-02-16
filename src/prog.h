@@ -26,6 +26,7 @@ struct Prog
 
     bool camera_follow_piece;
     bool camera_rotate;
+    bool fill;
 
     struct timespec last_moved;
 };

@@ -31,6 +31,7 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
 
     p->camera_follow_piece = false;
     p->camera_rotate = false;
+    p->fill = true;
 
     return p;
 }
@@ -104,13 +105,13 @@ void prog_mainloop(struct Prog *p)
         }
 
         for (size_t i = 0; i < p->nborders; ++i)
-            cube_render(p->borders[i], p->rend, p->camera);
+            cube_render(p->borders[i], p->rend, p->camera, false);
 
         for (size_t i = 0; i < p->npieces; ++i)
-            piece_render(p->pieces[i], p->rend, p->camera);
+            piece_render(p->pieces[i], p->rend, p->camera, p->fill);
 
         if (p->piece)
-            piece_render(p->piece, p->rend, p->camera);
+            piece_render(p->piece, p->rend, p->camera, p->fill);
 
         SDL_SetRenderDrawColor(p->rend, 0, 0, 0, 255);
         SDL_RenderPresent(p->rend);
@@ -170,6 +171,7 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
 
             case SDLK_z: p->camera_follow_piece = !p->camera_follow_piece; break;
             case SDLK_r: p->camera_rotate = !p->camera_rotate; break;
+            case SDLK_f: p->fill = !p->fill; break;
             }
         } break;
         }
