@@ -27,7 +27,7 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
 
     prog_create_borders(p);
 
-    p->camera = camera_alloc((Vec3f){ 0.f, 0.f, 0.f }, 0.f, 0.f);
+    p->camera = camera_alloc((Vec3f){ 0.f, 0.f, 0.f }, (Vec3f){ 0.f, 0.f, 0.f });
 
     p->camera_follow_piece = false;
     p->camera_rotate = false;
@@ -145,33 +145,27 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
 
             case SDLK_1:
                 p->camera->pos = (Vec3f){ 0.f, 0.f, 0.f };
-                p->camera->ha = 0.f;
-                p->camera->va = 0.f;
+                p->camera->angle = (Vec3f){ 0.f, 0.f, 0.f };
                 break;
             case SDLK_2:
-                p->camera->pos = (Vec3f){ 5.f, -4.f, 0.f };
-                p->camera->ha = -.5f;
-                p->camera->va = .3f;
+                p->camera->pos = (Vec3f){ 10.f, -4.f, 0.f };
+                p->camera->angle = (Vec3f){ -1.f, .3f, 0.f };
                 break;
             case SDLK_3:
                 p->camera->pos = (Vec3f){ -10.f, 0.f, 8.f };
-                p->camera->ha = 1.f;
-                p->camera->va = .1f;
+                p->camera->angle = (Vec3f){ 1.f, .1f, 0.f };
                 break;
             case SDLK_4:
                 p->camera->pos = (Vec3f){ 0.f, 15.f, 0.f };
-                p->camera->ha = 0.f;
-                p->camera->va = -1.f;
+                p->camera->angle = (Vec3f){ 0.f, -1.f, 0.f };
                 break;
             case SDLK_5:
                 p->camera->pos = (Vec3f){ 0.f, -15.f, 0.f };
-                p->camera->ha = 0.f;
-                p->camera->va = 1.f;
+                p->camera->angle = (Vec3f){ 0.f, 1.f, 0.f };
                 break;
             case SDLK_6:
                 p->camera->pos = (Vec3f){ 0.f, 0.f, 30.f };
-                p->camera->ha = M_PI;
-                p->camera->va = 0.f;
+                p->camera->angle = (Vec3f){ M_PI, 0.f, 0.f };
                 break;
 
             case SDLK_z: p->camera_follow_piece = !p->camera_follow_piece; break;
@@ -260,12 +254,14 @@ void prog_rotate_camera(struct Prog *p)
 {
     float angle = .06f;
 
+    p->camera->angle.z += angle;
+
     Vec3f center = { 0.f, 0.f, 15.f };
 
     float dx = p->camera->pos.x - center.x;
     float dz = p->camera->pos.z - center.z;
 
-    p->camera->ha -= angle;
+    p->camera->angle.x -= angle;
     p->camera->pos.x = cosf(angle) * dx - sinf(angle) * dz + center.x;
     p->camera->pos.z = sinf(angle) * dx + cosf(angle) * dz + center.z;
 }

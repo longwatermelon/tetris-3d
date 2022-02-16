@@ -11,18 +11,25 @@ SDL_FPoint render_project_point(Vec3f p, struct Camera *c)
 
     float rotx[3][3] = {
         { 1, 0, 0 },
-        { 0, cosf(c->va), sinf(c->va) },
-        { 0, -sinf(c->va), cosf(c->va) }
+        { 0, cosf(c->angle.y), sinf(c->angle.y) },
+        { 0, -sinf(c->angle.y), cosf(c->angle.y) }
     };
 
     float roty[3][3] = {
-        { cosf(c->ha), 0, sinf(c->ha) },
+        { cosf(c->angle.x), 0, sinf(c->angle.x) },
         { 0, 1, 0 },
-        { -sinf(c->ha), 0, cosf(c->ha) }
+        { -sinf(c->angle.x), 0, cosf(c->angle.x) }
+    };
+
+    float rotz[3][3] = {
+        { cosf(c->angle.z), sinf(c->angle.z), 0 },
+        { -sinf(c->angle.z), cosf(c->angle.z), 0 },
+        { 0, 0, 1 }
     };
 
     p = util_matrix_mul(roty, p);
     p = util_matrix_mul(rotx, p);
+    p = util_matrix_mul(rotz, p);
 
     if (p.z != 0.f)
     {
