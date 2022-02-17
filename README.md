@@ -10,8 +10,9 @@
 * 2-6: change view angle
 * z: toggle camera follow piece
 * r: toggle rotation around board
+* f: toggle block fills
 
-https://user-images.githubusercontent.com/73869536/153782629-4d9b0b64-8757-4738-9ebb-c3a6a6e0ff9e.mp4
+https://user-images.githubusercontent.com/73869536/154398425-c8e41f37-e736-4b1c-be43-4974d1b549e7.mp4
 
 # Building
 
