@@ -29,6 +29,8 @@ struct Prog
     bool fill;
 
     struct timespec last_moved;
+
+    bool restart;
 };
 
 struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r);

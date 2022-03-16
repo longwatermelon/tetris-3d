@@ -33,6 +33,8 @@ struct Prog *prog_alloc(SDL_Window *w, SDL_Renderer *r)
     p->camera_rotate = false;
     p->fill = true;
 
+    p->restart = false;
+
     return p;
 }
 
@@ -172,6 +174,7 @@ void prog_handle_events(struct Prog *p, SDL_Event *evt)
             case SDLK_z: p->camera_follow_piece = !p->camera_follow_piece; break;
             case SDLK_r: p->camera_rotate = !p->camera_rotate; break;
             case SDLK_f: p->fill = !p->fill; break;
+            case SDLK_q: p->restart = true; p->running = false; break;
             }
         } break;
         }
