@@ -11,6 +11,7 @@
 * z: toggle camera follow piece
 * r: toggle rotation around board
 * f: toggle block fills
+* q: restart game
 
 https://user-images.githubusercontent.com/73869536/154398425-c8e41f37-e736-4b1c-be43-4974d1b549e7.mp4
 

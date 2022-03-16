@@ -120,7 +120,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
-        p->color = (SDL_Color){ 102, 255, 102 };
+        p->color = (SDL_Color){ 255, 100, 100 };
     } break;
     case 3: // right squiggle
     {
@@ -156,7 +156,7 @@ void piece_random(struct Piece *p, SDL_Point pos)
         };
 
         memcpy(p->cubes, tmp, sizeof(p->cubes));
-        p->color = (SDL_Color){ 255, 178, 102 };
+        p->color = (SDL_Color){ 102, 178, 255 };
     } break;
     case 6: // T
     {
